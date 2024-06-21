@@ -4,7 +4,7 @@
 const Width = 500;
 const BarHeight = 20;
 const Margin = 1;
-const Height = (BarHeight + margin) * dataset.length;
+const Height = (BarHeight + Margin) * dataset.length;
 
 // Create SVG chart
 const svg = d3.select("#chart")
@@ -23,7 +23,7 @@ const bars = svg.selectAll("g")
     .append("g")
     .attr("transform", (d, i) => `translate(0, ${i * (BarHeight + Margin)})`);
 
-
+// Add rectangles to the bars
 bars.append("rect")
     .attr("width", 0) // Start with zero width for transition
     .attr("height", BarHeight)
@@ -31,3 +31,10 @@ bars.append("rect")
     .transition()
     .duration(500)
     .attr("width", d => xScale(d));
+
+// Add text to the bars
+bars.append("text")
+    .attr("x", d => xScale(d) + 5) // Add 5 pixels padding after the bar
+    .attr("y", barHeight / 2) // Vertically center the text
+    .attr("dy", "0.35em")
+    .text(d => d);
