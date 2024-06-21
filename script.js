@@ -1,5 +1,8 @@
 // U08282838
 
+// Dataset
+const dataset = [100, 420, 230, 850, 560, 925];
+
 // Chart Dimensions
 const Width = 500;
 const BarHeight = 20;
@@ -23,18 +26,28 @@ const bars = svg.selectAll("g")
     .append("g")
     .attr("transform", (d, i) => `translate(0, ${i * (BarHeight + Margin)})`);
 
-// Add rectangles to the bars
+// Add rectangles with transitions to the bars
 bars.append("rect")
-    .attr("width", 0) // Start with zero width for transition
+    .attr("width", 0) 
     .attr("height", BarHeight)
-    .style("fill", "green")
+    .style("fill", "teal")
     .transition()
-    .duration(500)
+    .duration(2500)
     .attr("width", d => xScale(d));
 
 // Add text to the bars
 bars.append("text")
-    .attr("x", d => xScale(d) + 5) // Add 5 pixels padding after the bar
-    .attr("y", barHeight / 2) // Vertically center the text
+    .attr("x", d => xScale(d) / 2) 
+    .attr("y", BarHeight / 2) 
     .attr("dy", "0.35em")
     .text(d => d);
+
+// Hover effect
+bars.on("mouseover", function() 
+{
+        d3.select(this).select("rect").style("fill", "yellow");
+})
+    .on("mouseout", function() 
+{
+        d3.select(this).select("rect").style("fill", "teal");
+});
